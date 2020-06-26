@@ -8,11 +8,10 @@
     <title>Online book shop</title>
 </head>
 <body>
-    Before
-    <br>
-    <!-- <%- body %> ==> Get all of content of other files into this code Thanks for 'express-ejs-layouts' lib -->
+    <!-- Get Content from partials folder header file -->
+    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/errorMsg.ejs') %>
+    <!-- ( - ) Get every content of other files of views folder into this code Thanks for 'express-ejs-layouts' lib -->
     <%- body %>
-    <br>
-    After
 </body>
 </html>
