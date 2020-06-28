@@ -1,9 +1,6 @@
 const express = require('express')
-const path = require('path')
 const Book  = require('../models/book')
 const Author = require('../models/author')
-const multer = require('multer')    // Upload files
-const fs = require('fs')
 const book = require('../models/book')
 
 const router = express.Router()
@@ -45,28 +42,17 @@ router.get('/books/new', async (req, res) => { // '/new' For new page.
 
 })
 
-imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'] // Accepting formats
-const uploadPath = path.join('public', 'uploads/bookCovers') // Path of storing images into folder
-
-const upload = multer({
-    dest: uploadPath,   // destination: folder that storing images
-    fileFilter: (req, file, callback) => {  // filter for format of images
-        callback(null, imageMimeTypes.includes(file.mimetype)) // includes --> return true or false | file.mimetype --> internal mimeType for image format [From google support]
-    }
-})
-
 // Create New Books Route
-router.post('/books/new', upload.single('cover'), async (req, res) => { // '/' For root page [(books) hint: check authorRouter const into the server.js].
-    const ImageFileName = req.file !== null ? req.file.filename : null // req.file --> Created from multer lib to allow us access the image
-
+router.post('/books/new', async (req, res) => { // '/' For root page [(books) hint: check authorRouter const into the server.js].
     const book = new Book({
         title: req.body.title,
         description: req.body.description,
         publishDate: new Date(req.body.publishDate), // req.body.publishDate is String & we need to new Date() to store Date format into database not String.
         pageCount: req.body.pageCount,
-        coverImageName: ImageFileName,
         author: req.body.author
     })
+
+    saveCover(book, req.body.cover)
 
     try {
         const newBook = await book.save()
@@ -74,17 +60,22 @@ router.post('/books/new', upload.single('cover'), async (req, res) => { // '/' F
         res.redirect('/books')
 
     } catch (error) {
-        removeCoverImage(book.coverImageName)
+        
         renderNewPage(res, book, true)
     }
 })
 
-function removeCoverImage(imageName) {
-    const coverPath = path.join(uploadPath, imageName)  // Path of image
-    fs.unlink(coverPath, err => {   // unlink --> delete file by path
-        if (err)
-            console.log(err)
-    })
+function saveCover(book, coverEncoded){
+        if(!coverEncoded) return
+        
+        const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'] // Accepting formats
+        
+        const cover = JSON.parse(coverEncoded) // Convert String to JSON
+    
+        if(cover && imageMimeTypes.includes(cover.type)){
+            book.coverImage = new Buffer.from(cover.data, 'base64')
+            book.coverImageType = cover.type
+        }
 }
 
 // Create renderNewPage to use it into get & post methods to avoid duplicate 

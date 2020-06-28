@@ -37,7 +37,7 @@ app.set('layout', 'layouts/layout') // make header & footer for all of layout in
 
 app.use(expressLayouts) // use express layouts from the lib
 app.use(express.static('public'))   // use public files like (HTML, CSS, JavaScript, Images)
-app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))    // {limit: '10mb', extended: false} to limit upload files to server
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false}))    // {limit: '50mb', extended: false} to limit upload files to server
 
 app.use(indexRouter)    // Use the router of main page
 app.use(authorRouter)    // Use the router of authors
