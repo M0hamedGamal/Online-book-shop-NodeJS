@@ -1,1 +1,10 @@
-Middle
+<h2>Recently Added</h2>
+
+<div>
+    <!-- Get all authors name by getting value of authors & loop on them -->
+    <% books.forEach(book => { %>
+
+   <img height="150" width="100" src="<%= book.coverImagePath %>">
+
+    <% }) %>
+</div>

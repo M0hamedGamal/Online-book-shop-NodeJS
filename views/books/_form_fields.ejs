@@ -1,0 +1,46 @@
+<div>
+    <!-- This file will be shared between new.ejs & edit.ejs So we created it -->
+    <label>Title</label>
+    <!-- ( = ) means get value of book.title & don't use book.title as normal HTML text -->
+    <input type="text" name="title" value="<%= book.title %>">
+
+    <label>Author</label>
+
+    <select name="author">
+        <% authors.forEach(auth => { %>
+        <% if(auth.id === book.author) { %>
+        <option selected label="<%= auth.name %>" value="<%= auth.id %>"></option>
+
+        <% } else { %>
+        <option label="<%= auth.name %>" value="<%= auth.id %>"></option>
+        <% } %>
+        <% }) %>
+
+    </select>
+</div>
+
+<div>
+    <label>Publish Date</label>
+    <!-- ( = ) means get value of author.name & don't use author.name as normal HTML text -->
+    <input type="date" name="publishDate" value="<%= !book.publishDate ? '' : 
+    book.publishDate.toISOString().split('T')[0] %>">
+    <!-- .split('T')[0] get first section only .. Check this ex. 2020-06-26T17:15 -->
+</div>
+
+<div>
+    <label>Page Count</label>
+    <!-- ( = ) means get value of author.name & don't use author.name as normal HTML text -->
+    <input type="number" name="pageCount" min="1" value="<%= book.pageCount %>">
+</div>
+
+<div>
+    <label>Cover</label>
+    <!-- ( = ) means get value of author.name & don't use author.name as normal HTML text -->
+    <input type="file" name="cover">
+</div>
+
+<div>
+    <label>Description</label>
+    <!-- ( = ) means get value of author.name & don't use author.name as normal HTML text -->
+    <textarea name="description"><%= book.description %></textarea>
+</div>

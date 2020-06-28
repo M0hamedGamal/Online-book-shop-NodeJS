@@ -4,7 +4,7 @@ const Author = require('../models/author')
 const router = express.Router()
 
 // Get All Authors Route
-router.get('/', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
+router.get('/authors', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
     const searchOptions = {}
 
     // Check if there's name into query of searching from user.
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => { // '/' For root page [(authors) hint: chec
     }
 
     try {
-        const authors = await Author.find(searchOptions)
+        const authors = await Author.find(searchOptions) // If searchOptions is empty that's mean get all authors
         res.render('authors/index', {
             authors: authors,
             searchOptions: req.query
@@ -21,19 +21,17 @@ router.get('/', async (req, res) => { // '/' For root page [(authors) hint: chec
         
     } catch (error) {
 
-        res.redirect('/')
+        res.redirect('/authors')
     }
-
 })
 
 // Get New Author Route
-router.get('/new', (req, res) => { // '/new' For new page.
+router.get('/authors/new', (req, res) => { // '/new' For new page.
     res.render('authors/new', { author: new Author() })  // {author : new Author()} --> send data to work with it as a key & value.
-
 })
 
 // Create New Author Route
-router.post('/', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
+router.post('/authors/new', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
     const author = new Author({
         name: req.body.name
     })
@@ -41,8 +39,7 @@ router.post('/', async (req, res) => { // '/' For root page [(authors) hint: che
     try {
         const newAuthor = await author.save()
         // res.redirect(`authors/${newAuthor.id}`)
-        res.redirect('authors')
-
+        res.redirect('/authors')
     } catch (error) {
         res.render('authors/new', {
             author: author,
