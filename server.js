@@ -6,6 +6,7 @@
  npm i --save-dev dotenv
  npm i body-parser@1.19.0   // Get Data from HTML to files JS
  npm i multer               // Uploading images
+ npm i method-override      // Allow the browser to work with put & delete methods
  git init
  npm i -g heroku
  -----Type When run the app into local host-----
@@ -25,6 +26,8 @@ const mongoose = require('mongoose') // Database.
 
 const bodyParser = require('body-parser')   // Get Data from HTML to files JS
 
+const methodOverride = require('method-override')
+
 const app = express()   // store all of functions of express into app const to use it latter
 
 const indexRouter = require('./routes/index')
@@ -38,6 +41,7 @@ app.set('layout', 'layouts/layout') // make header & footer for all of layout in
 app.use(expressLayouts) // use express layouts from the lib
 app.use(express.static('public'))   // use public files like (HTML, CSS, JavaScript, Images)
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}))    // {limit: '50mb', extended: false} to limit upload files to server
+app.use(methodOverride('_method'))
 
 app.use(indexRouter)    // Use the router of main page
 app.use(authorRouter)    // Use the router of authors
