@@ -156,7 +156,7 @@ async function renderEditPage(res, book, hasError = false) {
 async function renderFormPage(res, book, form, hasError = false) {
     try {
         const authors = await Author.find({})
-        const params = {
+        const params = { 
             authors: authors,
             book: book
         }
