@@ -33,7 +33,7 @@ router.get('/authors/new', (req, res) => { // '/new' For new page.
 
 
 // Create New Author Route
-router.post('/authors/new', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
+router.post('/authors', async (req, res) => { // '/' For root page [(authors) hint: check authorRouter const into the server.js].
     const author = new Author({
         name: req.body.name
     })
