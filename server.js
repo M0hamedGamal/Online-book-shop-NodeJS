@@ -50,7 +50,8 @@ app.use(bookRouter)    // Use the router of books
 // Check value of 'Process.env.DATABASE_URL' into env file
 mongoose.connect(process.env.DATABASE_URL, {    // connect to database 
     useNewUrlParser:true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 })
 
 const db = mongoose.connection  // connection to handdle the error or open

@@ -112,9 +112,12 @@ router.delete('/authors/:id', async (req, res) => {
 
     } catch (error) {
         if (!author) {
-            return res.redirect('/authors')
+            res.redirect('/authors')
+            
+        }else{
+
+            res.redirect(`/authors/${author.id}`)
         }
-        res.redirect(`/authors/${author.id}`)
 
     }
 })
