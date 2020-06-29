@@ -42,7 +42,7 @@ router.get('/books/new', async (req, res) => { // '/new' For new page.
 })
 
 // Create New Books Route
-router.post('/books/new', async (req, res) => { // '/' For root page [(books) hint: check authorRouter const into the server.js].
+router.post('/books', async (req, res) => { // '/' For root page [(books) hint: check authorRouter const into the server.js].
     const book = new Book({
         title: req.body.title,
         description: req.body.description,
